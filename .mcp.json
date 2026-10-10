@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "ogham": {
+      "command": "uvx",
+      "args": [
+        "--from", "ogham-mcp", "ogham-serve"
+      ],
+      "env": {
+        "EMBEDDING_PROVIDER": "ollama",
+        "OLLAMA_URL": "http://localhost:11434",
+        "EMBEDDING_DIM": "512",
+        "DATABASE_BACKEND": "supabase",
+        "SUPABASE_URL": "https://qhcmsvtmdkpgvdsjskjv.supabase.co",
+        "SUPABASE_KEY": "${SUPABASE_KEY}"
+      }
+    }
+  }
+}
