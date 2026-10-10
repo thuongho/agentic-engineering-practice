@@ -59,6 +59,12 @@ Read the matching file before starting these tasks:
 - `.claude/context/api-conventions.md`: any task involving API routes or endpoints.
 - `.claude/context/testing-standards.md`: any task involving tests or test coverage.
 
+## Verification
+
+After completing any significant change, run `/verify-app` before committing. Do not commit if any tests are failing.
+
+The test suite uses supertest and covers all API endpoints, so a passing run confirms the full application is working correctly.
+
 ## Never do these things
 
 - **Never call `db.prepare` outside `src/db/`.** Routes and services go through `src/db/queries/`.
