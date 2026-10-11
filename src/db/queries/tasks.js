@@ -1,5 +1,15 @@
 const { db } = require('../connection');
 
+/**
+ * @description Selects tasks with optional status, project and assignee filters, newest first, with limit and offset.
+ * @param {Object} [filters] - Query options.
+ * @param {string} [filters.status] - Task status.
+ * @param {number} [filters.projectId] - Project ID.
+ * @param {number} [filters.assigneeId] - Assignee user ID.
+ * @param {number} [filters.limit=20] - Maximum rows.
+ * @param {number} [filters.offset=0] - Rows to skip.
+ * @returns {Object[]} Task rows.
+ */
 function listTasks({ status, projectId, assigneeId, limit = 20, offset = 0 } = {}) {
   let query = 'SELECT * FROM tasks';
   const conditions = [];
@@ -26,10 +36,25 @@ function listTasks({ status, projectId, assigneeId, limit = 20, offset = 0 } = {
   return db.prepare(query).all(params);
 }
 
+/**
+ * @description Selects one task by ID.
+ * @param {number} id - ID of the task.
+ * @returns {Object|undefined} The task row, or undefined.
+ */
 function findTaskById(id) {
   return db.prepare('SELECT * FROM tasks WHERE id = ?').get(id);
 }
 
+/**
+ * @description Inserts a task and reads it back.
+ * @param {Object} task - Task columns.
+ * @param {string} task.title - Title.
+ * @param {string|null} task.description - Description.
+ * @param {number|null} task.projectId - Project ID.
+ * @param {number|null} task.assigneeId - Assignee user ID.
+ * @param {string|null} task.dueDate - Due date.
+ * @returns {Object} The inserted task row.
+ */
 function insertTask({ title, description, projectId, assigneeId, dueDate }) {
   const result = db.prepare(
     'INSERT INTO tasks (title, description, project_id, assignee_id, due_date) VALUES (?, ?, ?, ?, ?)'
@@ -37,6 +62,19 @@ function insertTask({ title, description, projectId, assigneeId, dueDate }) {
   return findTaskById(result.lastInsertRowid);
 }
 
+/**
+ * @description Overwrites all editable columns of a task and reads it back.
+ * @param {number} id - ID of the task.
+ * @param {Object} task - New column values.
+ * @param {string} task.title - Title.
+ * @param {string|null} task.description - Description.
+ * @param {string} task.status - Status.
+ * @param {number|null} task.projectId - Project ID.
+ * @param {number|null} task.assigneeId - Assignee user ID.
+ * @param {string|null} task.dueDate - Due date.
+ * @param {string|null} task.completedAt - Completion timestamp.
+ * @returns {Object} The updated task row.
+ */
 function updateTask(id, { title, description, status, projectId, assigneeId, dueDate, completedAt }) {
   db.prepare(
     'UPDATE tasks SET title=?, description=?, status=?, project_id=?, assignee_id=?, due_date=?, completed_at=? WHERE id=?'
@@ -44,6 +82,11 @@ function updateTask(id, { title, description, status, projectId, assigneeId, due
   return findTaskById(id);
 }
 
+/**
+ * @description Deletes a task by ID.
+ * @param {number} id - ID of the task.
+ * @returns {number} Number of rows deleted (0 or 1).
+ */
 function deleteTask(id) {
   return db.prepare('DELETE FROM tasks WHERE id = ?').run(id).changes;
 }

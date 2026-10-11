@@ -1,7 +1,7 @@
 // TODO: replace with real email provider (SendGrid, SES, etc.)
 
 /**
- * Sends an email. Currently a stub that only logs the recipient and subject to the console.
+ * @description Sends an email (currently a stub that only logs the recipient and subject to the console).
  * @param {Object} email - The email to send.
  * @param {string} email.to - Recipient address.
  * @param {string} email.subject - Subject line.
