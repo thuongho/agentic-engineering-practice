@@ -8,6 +8,8 @@ A REST API for a simple task management service. Users can create tasks, assign 
 
 ## Setup
 
+Requires Node.js 20 or newer.
+
 ```bash
 npm install
 npm run db:seed
@@ -36,7 +38,7 @@ The server starts on port 3000. Visit `http://localhost:3000/health` to confirm 
 | Script | What it does |
 |---|---|
 | `npm start` | Start the server |
-| `npm run dev` | Start with file watching (Node 18+) |
+| `npm run dev` | Start with file watching |
 | `npm test` | Run the test suite |
 | `npm run db:seed` | Create schema and seed sample data |
 | `npm run db:reset` | Drop and re-seed the database |

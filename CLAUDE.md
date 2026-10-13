@@ -59,6 +59,11 @@ Read the matching file before starting these tasks:
 - `.claude/context/api-conventions.md`: any task involving API routes or endpoints.
 - `.claude/context/testing-standards.md`: any task involving tests or test coverage.
 
+## Active Plugins
+
+- **`my-standards`** is active. Its conventions apply to all code in this project.
+- Use the `my-standards:api-endpoints` skill whenever adding new routes.
+
 ## Verification
 
 After completing any significant change, run `/verify-app` before committing. Do not commit if any tests are failing.
